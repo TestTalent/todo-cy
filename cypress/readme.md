@@ -1,0 +1,1 @@
+To run tests use a command: npx cypress run --spec "cypress/e2e/actions.cy.js"
