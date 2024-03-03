@@ -1,20 +1,23 @@
+import 'cypress-real-events'
+
 export class MainPage {
     visit() {
         cy.visit('https://todomvc.com/examples/react/dist/')
     } 
     
     addNewToDoItem(todo: string) {
-        cy.get('.new-todo')
+        cy.get('header .new-todo')
+            .should('exist')
             .clear()
             .type(todo + '{enter}')
     }
 
-    getToDoList() {
+    getToDoListItems() {
         return cy.get('.todo-list li');
     }
 
     markToDoItemAsCompleted() {
-        return this.getToDoList()
+        return this.getToDoListItems()
             .first()
             .find('.toggle')
             .click()
@@ -23,16 +26,17 @@ export class MainPage {
     }
 
     deleteToDoItem() {
-        return this.getToDoList()
-            .trigger('mouseover')
-            .get('.destroy')
-            .click({force: true})
+        return this.getToDoListItems()
+            .realHover()
+            .find('.destroy').should('be.visible')
+            .click()
     }
 
     changeNameOfToDoItem(newName: string) {
-        return this.getToDoList()
+        return this.getToDoListItems()
             .dblclick()
-            .get('[data-testid="text-input"]').last()
+            .get('main .new-todo')
+            .should('exist')
             .clear()
             .type(newName + '{enter}')
     }
