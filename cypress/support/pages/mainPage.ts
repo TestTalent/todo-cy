@@ -1,8 +1,9 @@
 import 'cypress-real-events'
+import { baseUrl } from '../../config';
 
 export class MainPage {
     visit() {
-        cy.visit('https://todomvc.com/examples/react/dist/')
+        cy.visit(baseUrl)
     } 
     
     addNewToDoItem(todo: string) {

@@ -5,6 +5,7 @@
     "@types/mocha": "^10.0.6",
     "cypress": "^13.6.6",
     "cypress-real-events": "^1.12.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.3"
   },
   "name": "todo-cy",
