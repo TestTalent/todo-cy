@@ -5,7 +5,6 @@ describe('Actions', () => {
   const mainPage = new MainPage();
   const toDoItemName = faker.lorem.word();
   
-
   beforeEach(() => {
     mainPage.visit();
     mainPage.addNewToDoItem(toDoItemName);
@@ -31,4 +30,23 @@ describe('Actions', () => {
     mainPage.getToDoListItems().should('have.text', newToDoItemName);
   });
 
-})
+  it('should filter the todo items', () => {
+    for (let i = 0; i < 2; i++) {
+      mainPage.addNewToDoItem(toDoItemName);
+    }
+    mainPage.markToDoItemAsCompleted();
+    mainPage.getToDoListItems().should('have.length', 3);
+    mainPage.filterToDoItemsByStatus('Active');
+    mainPage.getToDoListItems().should('have.length', 2);
+    mainPage.filterToDoItemsByStatus('Completed');
+    mainPage.getToDoListItems().should('have.length', 1);
+  })
+
+  it('should clear completed todo items', () => {
+    mainPage.markToDoItemAsCompleted();
+    mainPage.getToDoListItems().should('have.length', 1);
+    mainPage.clearCompleted();
+    mainPage.getToDoListItems().should('have.length', 0);
+  });
+
+});

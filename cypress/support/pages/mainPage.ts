@@ -4,6 +4,7 @@ import { baseUrl } from '../../config';
 export class MainPage {
     visit() {
         cy.visit(baseUrl)
+        this.getToDoListItems().should('not.exist')
     } 
     
     addNewToDoItem(todo: string) {
@@ -40,5 +41,13 @@ export class MainPage {
             .should('exist')
             .clear()
             .type(newName + '{enter}')
+    }
+
+    filterToDoItemsByStatus(status: string) {
+        return cy.get('.filters li').contains(status).click()
+    }
+
+    clearCompleted() {
+        return cy.get('.clear-completed').click()
     }
 }
